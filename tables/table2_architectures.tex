@@ -1,0 +1,20 @@
+% Table II: Architectural Benchmark (Host CPU)
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\renewcommand{\arraystretch}{0.88}
+\caption{Multi-Architecture INT8 Benchmark on Host CPU}
+\label{tab:architectures}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Architecture} & \textbf{Params} & \textbf{INT8 Size} & \textbf{Latency*} & \textbf{Val. Acc.} & \textbf{Touch} \\
+\midrule
+Baseline CNN & 14,410 & 20.6 KB & 0.006 ms & 98.66\% & 90\% \\
+MobileNet & 3,114 & 15.0 KB & 0.008 ms & 98.70\% & 80\% \\
+SqueezeNet & 3,526 & 20.5 KB & 0.010 ms & 98.47\% & 60\% \\
+\bottomrule
+\end{tabular}\par
+\vspace{2pt}
+{\raggedright \tiny *10-digit prediction time divided by 10 on single-thread host CPU (INT8 LiteRT).\par}
+\end{table}

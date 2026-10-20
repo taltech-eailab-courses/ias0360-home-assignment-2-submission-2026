@@ -1,0 +1,27 @@
+% Table I: Optimization and Quantization Progression
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{1.4pt}
+\renewcommand{\arraystretch}{0.88}
+\caption{Optimization and Quantization Progression}
+\label{tab:optimizations}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Optimization Method} & \textbf{Avg. Speed*} & \textbf{Memory} & \textbf{Val. Acc.} & \textbf{Touch} \\
+\midrule
+1) Baseline (SGD, $\eta=0.05$) & 0.025 ms & 14,410 (59.8 KB) & 98.64\% & 60\% \\
+2) Adam optimizer ($\eta=0.001$) & 0.027 ms & 14,410 (59.7 KB) & 98.71\% & 80\% \\
+3) LR tuning ($\eta=0.0005$) & 0.025 ms & 14,410 (59.8 KB) & 98.38\% & 90\% \\
+4) Extended training (12 ep) & 0.024 ms & 14,410 (59.7 KB) & 98.71\% & 100\% \\
+5) Batch size reduction ($B=32$) & 0.024 ms & 14,410 (59.7 KB) & 98.38\% & 70\% \\
+6) LeakyReLU activation & 0.026 ms & 14,410 (59.7 KB) & 98.57\% & 100\% \\
+7) Dropout regularization & 0.026 ms & 14,410 (59.8 KB) & 98.28\% & 80\% \\
+8) Channel pruning (filters 4, 8) & 0.015 ms & 3,722 (18.1 KB) & 98.00\% & 90\% \\
+9) L1 weight pruning (50\%) & 0.015 ms & 1,880 (18.0 KB) & 97.97\% & 90\% \\
+10) INT8 PTQ quantization & 0.005 ms & INT8 (9.4 KB) & 97.67\% & 90\% \\
+\bottomrule
+\end{tabular}\par
+\vspace{2pt}
+{\raggedright \tiny *10-digit prediction time divided by 10 on single-thread host CPU. Row 9 keeps 1,880 non-zero parameters out of 3,722 total.\par}
+\end{table}
