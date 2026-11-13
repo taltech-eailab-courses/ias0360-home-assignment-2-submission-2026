@@ -60,15 +60,37 @@ def build_model(num_filters1: int = 8, num_filters2: int = 16, dense_units: int 
     layers.append(tf_keras.layers.Dense(10, activation="softmax"))
     return tf_keras.models.Sequential(layers, name="mnist_baseline_cnn")
 
+def load_my_digits() -> tuple[np.ndarray, np.ndarray]:
+    """
+        Load the custom digits dataset.
+    """
+    images = []
+    labels = []
+
+    for label in range(10):
+        img_path = Path("my_digits") / f"digit_{label}.txt"
+
+        image_rows = []
+        with img_path.open("r") as file:
+            for line in file:
+                row = []
+                for character in line.strip():
+                    row.append(float(character))
+                image_rows.append(row)
+
+        image = np.array(image_rows, dtype=np.float32)
+        images.append(image)
+        labels.append(label)
+
+    x = np.array(images, dtype=np.float32)[..., np.newaxis]
+    y = np.array(labels, dtype=np.int64)
+
+    return x, y
 
 def plot_training_curve(model: tf_keras.Model, history: tf_keras.callbacks.History, test_loss: float, test_accuracy: float) -> None:
     """
         Plot the training curve and evaluate the model.
     """
-    
-    print(f"Test loss: {test_loss:.4f}")
-    print(f"Test accuracy: {test_accuracy:.4f}")
-    print(f"Trainable parameters: {model.count_params()}")
 
     plt.figure(figsize=(6, 4))
     plt.plot(history.history["accuracy"], label="train accuracy")
@@ -89,15 +111,27 @@ def plot_training_curve(model: tf_keras.Model, history: tf_keras.callbacks.Histo
 def main() -> None:
     
     x_train, y_train, x_test, y_test = load_mnist()
+    x_my_test, y_my_test = load_my_digits()
 
-    model = build_model()
+    model = build_model(acctivation="tanh")
+
+    print("\n--------------")
+    print("MODEL SUMMARY:")
+    print("--------------")
     model.summary()
+
+    optimizer=tf_keras.optimizers.Adam(learning_rate=0.001)
+    # optimizer=tf_keras.optimizers.SGD(learning_rate=0.001)
+    # optimizer=tf_keras.optimizers.RMSprop(learning_rate=0.001)
     model.compile(
-        optimizer="adam",
+        optimizer=optimizer,
         loss="sparse_categorical_crossentropy",
         metrics=["accuracy"],
     )
-    
+
+    print("\n---------------")
+    print("MODEL TRAINING:")
+    print("---------------")
     history = model.fit(
         x_train,
         y_train,
@@ -107,11 +141,33 @@ def main() -> None:
         verbose=2,
     )
 
-    test_loss, test_accuracy = model.evaluate(x_test, y_test, verbose=0)
+    # plot_training_curve(model, history, test_loss, test_accuracy)
 
-    plot_training_curve(model, history, test_loss, test_accuracy)
-
+    print("\n-----------------")
+    print("MODEL EVALUATION:")
+    print("-----------------")
     
+    mnist_test_loss, mnist_test_accuracy = model.evaluate(x_test, y_test, verbose=0)
+    print(f"Test loss: {mnist_test_loss:.4f}")
+    print(f"Test accuracy: {mnist_test_accuracy:.4f}")
+
+    my_test_loss, my_test_accuracy = model.evaluate(x_my_test, y_my_test, verbose=0)
+    print(f"Custom digits test loss: {my_test_loss:.4f}")
+    print(f"Custom digits test accuracy: {my_test_accuracy:.4f}")
+
+
+
+    print("\n-----------------")
+    print("MODEL PREDICTION:")
+    print("-----------------")
+
+    start = time.perf_counter()
+    predictions = model.predict(x_my_test, verbose=0)
+    elapsed = time.perf_counter() - start
+    average_time_ms = elapsed / len(x_my_test) * 1000
+
+    # print(f"Predictions: {predictions}")    
+    print(f"Average prediction time: {average_time_ms:.2f} ms")
 
 
 if __name__ == "__main__":
