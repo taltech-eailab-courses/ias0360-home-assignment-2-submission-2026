@@ -198,11 +198,6 @@ static void core1_entry(void) {
 
         if (success) {
             ++capture_number;
-            if (capture_number == 10) {
-                multicore_fifo_push_blocking(TASK_COMPLETE_FLAG);
-                printf("Collected 10 samples for digit %d\n", DIGIT_LABEL);
-                break;
-            }
             multicore_fifo_push_blocking(TASK_COMPLETE_FLAG);
         } else {
             multicore_fifo_push_blocking(WRITE_FAILED_FLAG);
