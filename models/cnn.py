@@ -32,4 +32,4 @@ def build_model(num_filters1: int = 8, num_filters2: int = 16, dense_units: int 
         layers.append(tf_keras.layers.Dropout(dropout))
     # OUTPUT LAYER
     layers.append(tf_keras.layers.Dense(10, activation="softmax"))
-    return tf_keras.models.Sequential(layers, name="mnist_baseline_cnn")
+    return tf_keras.models.Sequential(layers, name="cnn")
