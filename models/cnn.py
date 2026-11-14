@@ -1,6 +1,6 @@
 import tf_keras
 
-def build_model(num_filters1: int = 8, num_filters2: int = 16, dense_units: int = 32, activation: str = "relu", dropout: float = 0.0) -> tf_keras.Model:
+def build_cnn(num_filters1: int = 8, num_filters2: int = 16, dense_units: int = 32, activation: str = "relu", dropout: float = 0.0) -> tf_keras.Model:
     """
         Build the compact CNN used as the assignment baseline.
     """

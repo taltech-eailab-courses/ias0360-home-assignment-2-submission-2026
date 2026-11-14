@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 from models.cnn import build_cnn
 from models.squeezenet import build_squeezenet
-from models.mobilenet import build_mobile_net
+from models.mobilenet import build_mobilenet
 
 
 tf.random.set_seed(10)
@@ -93,10 +93,10 @@ def main(args) -> None:
 
     if args.model == "cnn":
         model = build_cnn()
-    elif args.model == "mobilenet":
-        model = build_mobile_net()
     elif args.model == "squeezenet":
         model = build_squeezenet()
+    elif args.model == "mobilenet":
+            model = build_mobilenet()
 
     print("\n--------------")
     print("MODEL SUMMARY:")
