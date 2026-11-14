@@ -5,7 +5,12 @@ from xml.parsers.expat import model
 import numpy as np
 import tensorflow as tf
 import tf_keras
+import argparse
 import matplotlib.pyplot as plt
+
+from models.cnn import build_cnn
+from models.squeezenet import build_squeezenet
+from models.mobilenet import build_mobile_net
 
 
 tf.random.set_seed(10)
@@ -26,39 +31,7 @@ def load_mnist() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     return x_train, y_train, x_test, y_test
 
 
-def build_model(num_filters1: int = 8, num_filters2: int = 16, dense_units: int = 32, activation: str = "relu", dropout: float = 0.0) -> tf_keras.Model:
-    """
-        Build the compact CNN used as the assignment baseline.
-    """
-    layers = [
 
-        # INPUT LAYER
-        tf_keras.layers.InputLayer(input_shape=(28, 28, 1)),
-        # 28*28*1
-
-        # FIRST LAYER
-        tf_keras.layers.Conv2D(num_filters1, (3, 3), activation=activation),
-        # 26*26*8
-        tf_keras.layers.MaxPooling2D((2, 2)),
-        # 13*13*8
-
-        # SECOND LAYER
-        tf_keras.layers.Conv2D(num_filters2, (3, 3), activation=activation),
-        # 11*11*16
-        tf_keras.layers.MaxPooling2D((2, 2)),
-        # 5*5*16
-        tf_keras.layers.Flatten(),
-        # 400
-        
-        # THIRD LAYER
-        tf_keras.layers.Dense(dense_units, activation=activation),
-        # 32
-    ]
-    if dropout > 0:
-        layers.append(tf_keras.layers.Dropout(dropout))
-    # OUTPUT LAYER
-    layers.append(tf_keras.layers.Dense(10, activation="softmax"))
-    return tf_keras.models.Sequential(layers, name="mnist_baseline_cnn")
 
 def load_my_digits() -> tuple[np.ndarray, np.ndarray]:
     """
@@ -87,6 +60,9 @@ def load_my_digits() -> tuple[np.ndarray, np.ndarray]:
 
     return x, y
 
+
+
+
 def plot_training_curve(model: tf_keras.Model, history: tf_keras.callbacks.History, test_loss: float, test_accuracy: float) -> None:
     """
         Plot the training curve and evaluate the model.
@@ -108,12 +84,19 @@ def plot_training_curve(model: tf_keras.Model, history: tf_keras.callbacks.Histo
     print("Saved outputs in:", "results/")
 
 
-def main() -> None:
+
+
+def main(args) -> None:
     
     x_train, y_train, x_test, y_test = load_mnist()
     x_my_test, y_my_test = load_my_digits()
 
-    model = build_model(acctivation="tanh")
+    if args.model == "cnn":
+        model = build_cnn()
+    elif args.model == "mobilenet":
+        model = build_mobile_net()
+    elif args.model == "squeezenet":
+        model = build_squeezenet()
 
     print("\n--------------")
     print("MODEL SUMMARY:")
@@ -171,4 +154,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", choices=["cnn", "mobilenet", "squeezenet"], default="cnn", help="Choose the model to run.")
+    args = parser.parse_args()
+    main(args)
