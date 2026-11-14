@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 import time
-from xml.parsers.expat import model
 import numpy as np
 import tensorflow as tf
 import tf_keras
@@ -106,6 +105,7 @@ def main(args) -> None:
     optimizer=tf_keras.optimizers.Adam(learning_rate=0.001)
     # optimizer=tf_keras.optimizers.SGD(learning_rate=0.001)
     # optimizer=tf_keras.optimizers.RMSprop(learning_rate=0.001)
+
     model.compile(
         optimizer=optimizer,
         loss="sparse_categorical_crossentropy",
