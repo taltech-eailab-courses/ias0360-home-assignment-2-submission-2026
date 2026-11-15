@@ -1,0 +1,4 @@
+architecture,params,fp32_size_kb,int8_size_kb,fp32_speed_ms,int8_speed_ms,fp32_val_acc,int8_val_acc,fp32_own_acc,int8_own_acc,train_time_s
+Custom 2D-CNN,105866,1284.61,109.01,0.1314,0.0173,0.9905,0.9904,0.8,0.8,25.83
+SqueezeNet-Micro (Fire modules),12622,228.79,23.22,0.1791,0.0163,0.9887,0.9888,0.6,0.6,36.06
+MobileNetV2-Micro (Inverted Residuals),14106,343.89,30.94,0.4825,0.0286,0.9902,0.9905,1.0,1.0,127.56

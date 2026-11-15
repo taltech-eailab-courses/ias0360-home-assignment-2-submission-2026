@@ -1,0 +1,11 @@
+id,method,speed_ms,params,size_kb,val_acc,own_acc,own_raw_acc,train_time_s,own_preds
+init_mlp,"Initial model (Slide 56 MLP: 80-60 ELU, Adam lr=0.001, ep=5, bs=32)",0.0416,68270,831.86,0.9751,0.7,0.1,5.29,"[0, 2, 2, 3, 4, 5, 6, 4, 8, 3]"
+mlp_sgd_lr005,"Slide 56 MLP (ep=10, lr=0.05, SGD, bs=64)",0.0424,68270,559.39,0.9674,0.6,0.0,4.36,"[0, 8, 2, 3, 9, 5, 6, 4, 8, 8]"
+cnn_base,"Custom CNN Baseline (Conv 16/32, Dense 64, ReLU, Adam lr=0.001, ep=5, bs=64)",0.1257,105866,1283.55,0.9899,0.9,0.4,13.45,"[0, 1, 2, 3, 4, 5, 6, 7, 0, 9]"
+cnn_dropout_ep10,"Custom CNN + Dropout(0.25) + 10 epochs (Adam lr=0.001, bs=64)",0.1175,105866,1284.66,0.9903,0.7,0.6,30.33,"[0, 1, 2, 3, 9, 5, 6, 4, 0, 9]"
+cnn_wide_acc,"Accuracy-opt CNN (Conv 32/64, Dense 128, Dropout 0.25, Adam lr=0.001, ep=8)",0.1637,421642,4986.12,0.9924,0.8,0.4,51.85,"[0, 2, 2, 3, 9, 5, 6, 7, 8, 9]"
+cnn_rmsprop,"Custom CNN + RMSprop (lr=0.001, ep=5, bs=64)",0.1181,105866,865.29,0.9905,0.9,0.4,14.85,"[0, 1, 2, 3, 9, 5, 6, 7, 8, 9]"
+cnn_compact,"Memory/Speed-opt Micro-CNN (Conv 8/16, Dense 32, ReLU, Adam lr=0.001, ep=8)",0.1002,26698,357.23,0.9874,0.7,0.3,20.08,"[0, 2, 2, 3, 9, 5, 6, 7, 0, 9]"
+cnn_ptq_int8,Custom CNN + Post-Training Int8 Quantization (PTQ TFLite),0.0174,105866,108.94,0.9904,0.7,0.6,0.0,"[0, 1, 2, 3, 9, 5, 6, 4, 0, 9]"
+cnn_qat_int8,Custom CNN + Quantization-Aware Training (QAT Int8 TFLite),0.0181,105866,109.39,0.9917,0.8,0.4,12.27,"[0, 2, 2, 3, 4, 5, 6, 7, 0, 9]"
+compact_ptq_int8,"Micro-CNN (8/16, Dense 32) + Int8 PTQ TFLite (Best Memory & Speed)",0.013,26698,30.94,0.9878,0.7,0.3,0.0,"[0, 2, 2, 3, 9, 5, 6, 7, 0, 9]"
