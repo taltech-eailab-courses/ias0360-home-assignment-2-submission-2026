@@ -1,0 +1,23 @@
+name,description,own_in_training,latency_ms_host_uint8,params,keras_float32_kb,tflite_uint8_kb,val_acc_mean,val_acc_std,own_acc_uint8,own_count
+initial_provided_only,Initial model trained on the provided dataset only (no own recordings in training),False,0.0164,4556,17.8,9.86,0.94,0.049,0.65,100
+best_provided_only,Step 6 MobileNet-style CNN trained on the provided dataset only (no own recordings in training),False,0.0142,10308,40.27,27.99,0.99,0.02,0.6,100
+initial,"Initial model (lab 2.2 CNN: 8/16 filters, dense 16, ReLU, dropout 0.1; Adam lr=0.001, 30 epochs, batch 16)",True,0.0143,4556,17.8,9.86,0.94,0.0583,0.96,100
+ep10_lr0.05,Number of epochs = 10; learning rate = 0.05,True,0.0146,4556,17.8,9.86,0.92,0.051,0.85,100
+ep10,Number of epochs = 10,True,0.0145,4556,17.8,9.86,0.94,0.0374,0.9,100
+ep60,Number of epochs = 60,True,0.0147,4556,17.8,9.91,0.94,0.0583,0.96,100
+ep100,Number of epochs = 100,True,0.0144,4556,17.8,9.91,0.94,0.0583,0.94,100
+lr0.01,Learning rate = 0.01,True,0.0143,4556,17.8,9.91,0.95,0.0447,0.94,100
+lr0.0003_ep60,"Learning rate = 0.0003, 60 epochs",True,0.0142,4556,17.8,9.91,0.94,0.0583,0.95,100
+sgd_lr0.01_ep60,"Optimizer SGD (momentum 0.9), lr = 0.01, 60 epochs",True,0.0148,4556,17.8,9.91,0.94,0.0583,0.95,100
+rmsprop,"Optimizer RMSprop, lr = 0.001",True,0.0141,4556,17.8,9.91,0.94,0.0583,0.94,100
+batch8,Batch size = 8,True,0.014,4556,17.8,9.91,0.94,0.0583,0.94,100
+batch32_ep60,"Batch size = 32, 60 epochs",True,0.0146,4556,17.8,9.91,0.94,0.0583,0.92,100
+act_tanh,Activation = tanh,True,0.0149,4556,17.8,10.2,0.97,0.0245,0.94,100
+dropout0,No Dropout,True,0.0139,4556,17.8,9.91,0.93,0.0748,0.95,100
+dropout0.3,Dropout = 0.3,True,0.0141,4556,17.8,9.91,0.94,0.0583,0.95,100
+filters16_32_dense32,"More neurons: 16/32 filters, dense 32",True,0.0237,17812,69.58,23.91,0.93,0.0748,0.94,100
+extra_conv_layer,One more Conv2D+MaxPool layer,True,0.015,6892,26.92,13.88,0.96,0.0374,0.95,100
+aug_x10,"Data augmentation x10 (time warp/shift, rotation +-15 deg, scale, noise)",True,0.0143,4556,17.8,9.91,0.97,0.0245,0.99,100
+combined_best,"Combined: 16/32 filters, dense 32, dropout 0.3, augmentation x10, 80 epochs",True,0.0239,17812,69.58,23.91,0.98,0.0245,0.98,100
+mobilenet_ds_cnn,"Step 6: MobileNet-style depthwise-separable CNN (augmentation x10, 80 epochs)",True,0.0136,10308,40.27,27.99,0.98,0.0245,1.0,100
+squeezenet_cnn,"Step 6: SqueezeNet-style Fire-module CNN (augmentation x10, 80 epochs)",True,0.0175,8180,31.95,27.69,0.99,0.02,1.0,100
