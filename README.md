@@ -13,8 +13,7 @@ them to an SD card.
 
 ## Python model evaluation
 
-Create or activate a Python environment containing TensorFlow, NumPy, and
-Matplotlib. From this directory, run:
+From this directory, run:
 
 ```sh
 python3 main.py --model cnn
@@ -47,8 +46,9 @@ therefore be available at the path expected by
 Build from this directory with:
 
 ```sh
-cmake -S . -B build -DDIGIT_LABEL=1
-cmake --build build -j2
+cd build
+cmake .. -DDIGIT_LABEL=1
+make -j$(nproc)
 ```
 
 `DIGIT_LABEL` selects the digit label written to the captured filenames and
@@ -56,8 +56,9 @@ must be an integer from 0 to 9. For another digit, reconfigure the same build
 directory, for example:
 
 ```sh
-cmake -S . -B build -DDIGIT_LABEL=2
-cmake --build build -j2
+cd build
+cmake .. -DDIGIT_LABEL=2
+make -j$(nproc)
 ```
 
 The build produces `build/image_processing.uf2`. Flash this UF2 file to the
