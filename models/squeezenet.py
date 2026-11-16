@@ -40,6 +40,7 @@ def build_squeezenet(activation: str = "relu", dense_units: int = 64) -> tf_kera
     
     # Classification head
     x = tf_keras.layers.Flatten()(x) # 1x1x1568
+    #x = tf_keras.layers.GlobalAveragePooling2D()(x) #
     x = tf_keras.layers.Dense(dense_units, activation=activation)(x) # 1x1x64
     outputs = tf_keras.layers.Dense(10, activation="softmax")(x) # 1x1x10
     

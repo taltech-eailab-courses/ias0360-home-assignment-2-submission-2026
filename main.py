@@ -20,13 +20,23 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "1")
 
 
 
-def load_mnist() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+
+def load_mnist(binary: bool = True) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
         Load MNIST and prepare tensors for Conv2D.
     """
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
-    x_train = (x_train / 255.0).astype("float32")[..., np.newaxis]
-    x_test = (x_test / 255.0).astype("float32")[..., np.newaxis]
+
+    x_train = (x_train / 255.0).astype("float32")
+    x_test = (x_test / 255.0).astype("float32")
+
+    if binary:
+        x_train = (x_train >= 0.4).astype("float32")
+        x_test = (x_test >= 0.4).astype("float32")
+
+    x_train = x_train[..., np.newaxis]
+    x_test = x_test[..., np.newaxis]
+
     return x_train, y_train, x_test, y_test
 
 
@@ -67,16 +77,16 @@ def plot_training_curve(model: tf_keras.Model, history: tf_keras.callbacks.Histo
         Plot the training curve and evaluate the model.
     """
 
-    plt.figure(figsize=(6, 4))
+    figure = plt.figure(figsize=(6, 4))
     plt.plot(history.history["accuracy"], label="train accuracy")
     plt.plot(history.history["val_accuracy"], label="validation accuracy")
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
-    plt.title("Day 1 MNIST baseline")
+    plt.title("MNIST training curve")
     plt.legend()
     plt.tight_layout()
-    plt.savefig("results/baseline_training_curve.png", dpi=110)
-    plt.close()
+    figure.savefig("results/baseline_training_curve.png", dpi=110)
+    plt.close(figure)
 
     model.save("results/mnist_cnn.h5")
     model.export("results/mnist_cnn_savedmodel")
@@ -89,6 +99,23 @@ def main(args) -> None:
     
     x_train, y_train, x_test, y_test = load_mnist()
     x_my_test, y_my_test = load_my_digits()
+
+    fig, axes = plt.subplots(2, 5, figsize=(10, 4))
+
+    for i, ax in enumerate(axes[0]):
+        ax.imshow(x_test[i, :, :, 0], cmap="gray")
+        ax.set_title(f"MNIST: {y_test[i]}")
+        ax.axis("off")
+
+    for i, ax in enumerate(axes[1]):
+        ax.imshow(x_my_test[i, :, :, 0], cmap="gray")
+        ax.set_title(f"Own: {y_my_test[i]}")
+        ax.axis("off")
+
+    plt.tight_layout()
+    fig.savefig("results/mnist_and_custom_digits.png", dpi=110)
+    plt.show()
+    plt.close(fig)
 
     if args.model == "cnn":
         model = build_cnn()
@@ -124,8 +151,6 @@ def main(args) -> None:
         verbose=2,
     )
 
-    # plot_training_curve(model, history, test_loss, test_accuracy)
-
     print("\n-----------------")
     print("MODEL EVALUATION:")
     print("-----------------")
@@ -133,6 +158,7 @@ def main(args) -> None:
     mnist_test_loss, mnist_test_accuracy = model.evaluate(x_test, y_test, verbose=0)
     print(f"Test loss: {mnist_test_loss:.4f}")
     print(f"Test accuracy: {mnist_test_accuracy:.4f}")
+    plot_training_curve(model, history, mnist_test_loss, mnist_test_accuracy)
 
     my_test_loss, my_test_accuracy = model.evaluate(x_my_test, y_my_test, verbose=0)
     print(f"Custom digits test loss: {my_test_loss:.4f}")
