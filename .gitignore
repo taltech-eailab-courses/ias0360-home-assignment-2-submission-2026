@@ -1,0 +1,17 @@
+# Exclude report and large data files
+homework_2_complete/report/
+homework_2_complete/results/
+homework_2_complete/preview/
+homework_2_complete/sd_data/
+homework_2_complete/sd_data_9/
+homework_2_complete/own_data/
+homework_2_complete/.DS_Store
+*.pth
+*.tflite
+*.aux
+*.fls
+*.log
+*.fdb_latexmk
+*.pyc
+__pycache__/
+.DS_Store
