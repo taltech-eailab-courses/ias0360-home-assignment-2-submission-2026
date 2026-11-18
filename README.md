@@ -108,10 +108,6 @@ The physical-board test requires the Pico and LCD to be connected.
 
 ## Report
 
-To regenerate the figures and tables and rebuild the report:
-
 ```sh
-python3 tools/prepare_pretrained_report.py
-python3 tools/make_report_figures.py
-cd report && latexmk -pdf home_assignment_2_report.tex
+home_assignment_2_report.pdf
 ```
