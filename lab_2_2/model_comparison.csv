@@ -1,0 +1,8 @@
+experiment,test_accuracy,train_time_sec,inference_ms_image,trainable_params,weights_memory_kb,val_accuracy
+Baseline,0.9869,28.8,49.587,14410,56.29,0.5
+Fewer filters,0.9817,34.7,47.354,7098,27.73,0.3
+More filters,0.9868,45.2,49.024,30762,120.16,0.5
+1 Conv layer,0.9792,27.6,51.687,43706,170.73,0.2
+3 Conv layers,0.9881,36.7,53.862,31850,124.41,0.4
+Dense 16,0.9826,34.3,56.546,7834,30.6,0.8
+2 Dense layers,0.98,41.2,57.828,14778,57.73,0.5
