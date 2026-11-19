@@ -1,0 +1,122 @@
+{
+  "seed": 10,
+  "experiments": [
+    {
+      "name": "cnn_baseline",
+      "architecture": "small_cnn",
+      "filters": [
+        8,
+        16
+      ],
+      "dense": 32,
+      "head": "flatten",
+      "mnist_epochs": 5,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.01
+    },
+    {
+      "name": "cnn_smaller_dense",
+      "architecture": "small_cnn",
+      "filters": [
+        8,
+        16
+      ],
+      "dense": 16,
+      "head": "flatten",
+      "mnist_epochs": 5,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.01
+    },
+    {
+      "name": "mlp",
+      "architecture": "mlp",
+      "dense": [
+        64,
+        32
+      ],
+      "mnist_epochs": 5,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.01
+    },
+    {
+      "name": "lenet",
+      "architecture": "lenet_style",
+      "filters": [
+        6,
+        16
+      ],
+      "dense": [
+        120,
+        84
+      ],
+      "mnist_epochs": 5,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.01
+    },
+    {
+      "name": "head_8_16_8",
+      "architecture": "small_cnn",
+      "filters": [
+        8,
+        16
+      ],
+      "dense": 8,
+      "head": "flatten",
+      "mnist_epochs": 10,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.02
+    },
+    {
+      "name": "head_4_8_8",
+      "architecture": "small_cnn",
+      "filters": [
+        4,
+        8
+      ],
+      "dense": 8,
+      "head": "flatten",
+      "mnist_epochs": 10,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.02
+    },
+    {
+      "name": "head_4_8_6",
+      "architecture": "small_cnn",
+      "filters": [
+        4,
+        8
+      ],
+      "dense": 6,
+      "head": "flatten",
+      "mnist_epochs": 10,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.02
+    },
+    {
+      "name": "head_4_8_4",
+      "architecture": "small_cnn",
+      "filters": [
+        4,
+        8
+      ],
+      "dense": 4,
+      "head": "flatten",
+      "mnist_epochs": 10,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.02
+    },
+    {
+      "name": "head_4_8_2",
+      "architecture": "small_cnn",
+      "filters": [
+        4,
+        8
+      ],
+      "dense": 2,
+      "head": "flatten",
+      "mnist_epochs": 10,
+      "adaptation_epochs": 10,
+      "max_mnist_drop": 0.02
+    }
+  ]
+}

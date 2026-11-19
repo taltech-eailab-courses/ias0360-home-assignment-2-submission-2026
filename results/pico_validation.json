@@ -1,0 +1,1002 @@
+[
+  {
+    "name": "D0_001.PGM",
+    "label": 0,
+    "expected": 0,
+    "scores": [
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 0,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D0_002.PGM",
+    "label": 0,
+    "expected": 0,
+    "scores": [
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -127
+    ],
+    "actual": 0,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D0_003.PGM",
+    "label": 0,
+    "expected": 0,
+    "scores": [
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 0,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D0_004.PGM",
+    "label": 0,
+    "expected": 0,
+    "scores": [
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 0,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D0_005.PGM",
+    "label": 0,
+    "expected": 0,
+    "scores": [
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 0,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D1_001.PGM",
+    "label": 1,
+    "expected": 1,
+    "scores": [
+      -128,
+      123,
+      -128,
+      -128,
+      -124,
+      -128,
+      -128,
+      -127,
+      -128,
+      -128
+    ],
+    "actual": 1,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D1_002.PGM",
+    "label": 1,
+    "expected": 1,
+    "scores": [
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 1,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D1_003.PGM",
+    "label": 1,
+    "expected": 1,
+    "scores": [
+      -128,
+      121,
+      -127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -122,
+      -128
+    ],
+    "actual": 1,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D1_004.PGM",
+    "label": 1,
+    "expected": 1,
+    "scores": [
+      -128,
+      124,
+      -128,
+      -128,
+      -125,
+      -128,
+      -128,
+      -128,
+      -128,
+      -127
+    ],
+    "actual": 1,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D1_005.PGM",
+    "label": 1,
+    "expected": 1,
+    "scores": [
+      -128,
+      83,
+      -128,
+      -128,
+      -110,
+      -128,
+      -128,
+      -106,
+      -128,
+      -123
+    ],
+    "actual": 1,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D2_001.PGM",
+    "label": 2,
+    "expected": 2,
+    "scores": [
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 2,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D2_002.PGM",
+    "label": 2,
+    "expected": 2,
+    "scores": [
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 2,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D2_003.PGM",
+    "label": 2,
+    "expected": 2,
+    "scores": [
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 2,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D2_004.PGM",
+    "label": 2,
+    "expected": 2,
+    "scores": [
+      -128,
+      -128,
+      126,
+      -126,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 2,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D2_005.PGM",
+    "label": 2,
+    "expected": 2,
+    "scores": [
+      -128,
+      -128,
+      127,
+      -127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 2,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D3_001.PGM",
+    "label": 3,
+    "expected": 3,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      95,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -95
+    ],
+    "actual": 3,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D3_002.PGM",
+    "label": 3,
+    "expected": 3,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      53,
+      -128,
+      -123,
+      -128,
+      -128,
+      -128,
+      -58
+    ],
+    "actual": 3,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D3_003.PGM",
+    "label": 3,
+    "expected": 3,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      111,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -111
+    ],
+    "actual": 3,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D3_004.PGM",
+    "label": 3,
+    "expected": 3,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      94,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -95
+    ],
+    "actual": 3,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D3_005.PGM",
+    "label": 3,
+    "expected": 3,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      24,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -24
+    ],
+    "actual": 3,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D4_001.PGM",
+    "label": 4,
+    "expected": 4,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 4,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D4_002.PGM",
+    "label": 4,
+    "expected": 4,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 4,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D4_003.PGM",
+    "label": 4,
+    "expected": 4,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      126,
+      -128,
+      -126,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 4,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D4_004.PGM",
+    "label": 4,
+    "expected": 4,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 4,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D4_005.PGM",
+    "label": 4,
+    "expected": 4,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 4,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D5_001.PGM",
+    "label": 5,
+    "expected": 5,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 5,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D5_002.PGM",
+    "label": 5,
+    "expected": 5,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 5,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D5_003.PGM",
+    "label": 5,
+    "expected": 5,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -127,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 5,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D5_004.PGM",
+    "label": 5,
+    "expected": 5,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 5,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D5_005.PGM",
+    "label": 5,
+    "expected": 5,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 5,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D6_001.PGM",
+    "label": 6,
+    "expected": 6,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 6,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D6_002.PGM",
+    "label": 6,
+    "expected": 6,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 6,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D6_003.PGM",
+    "label": 6,
+    "expected": 6,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 6,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D6_004.PGM",
+    "label": 6,
+    "expected": 6,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 6,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D6_005.PGM",
+    "label": 6,
+    "expected": 6,
+    "scores": [
+      -123,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      123,
+      -128,
+      -128,
+      -128
+    ],
+    "actual": 6,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D7_001.PGM",
+    "label": 7,
+    "expected": 7,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128
+    ],
+    "actual": 7,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D7_002.PGM",
+    "label": 7,
+    "expected": 7,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -120,
+      -128,
+      -128,
+      -128,
+      115,
+      -128,
+      -124
+    ],
+    "actual": 7,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D7_003.PGM",
+    "label": 7,
+    "expected": 7,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128
+    ],
+    "actual": 7,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D7_004.PGM",
+    "label": 7,
+    "expected": 7,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128
+    ],
+    "actual": 7,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D7_005.PGM",
+    "label": 7,
+    "expected": 7,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128,
+      -128
+    ],
+    "actual": 7,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D8_001.PGM",
+    "label": 8,
+    "expected": 8,
+    "scores": [
+      -127,
+      -128,
+      -128,
+      -127,
+      -128,
+      -128,
+      -128,
+      -128,
+      103,
+      -104
+    ],
+    "actual": 8,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D8_002.PGM",
+    "label": 8,
+    "expected": 8,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128
+    ],
+    "actual": 8,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D8_003.PGM",
+    "label": 8,
+    "expected": 9,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -125,
+      -128,
+      -128,
+      -128,
+      -128,
+      -48,
+      44
+    ],
+    "actual": 9,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D8_004.PGM",
+    "label": 8,
+    "expected": 8,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      120,
+      -120
+    ],
+    "actual": 8,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D8_005.PGM",
+    "label": 8,
+    "expected": 8,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      127,
+      -128
+    ],
+    "actual": 8,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D9_001.PGM",
+    "label": 9,
+    "expected": 9,
+    "scores": [
+      -128,
+      -126,
+      -128,
+      -83,
+      -128,
+      -127,
+      -128,
+      -127,
+      -127,
+      78
+    ],
+    "actual": 9,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D9_002.PGM",
+    "label": 9,
+    "expected": 9,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -108,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      107
+    ],
+    "actual": 9,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D9_003.PGM",
+    "label": 9,
+    "expected": 9,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -116,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      116
+    ],
+    "actual": 9,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D9_004.PGM",
+    "label": 9,
+    "expected": 9,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -127,
+      -128,
+      -128,
+      -128,
+      -128,
+      -128,
+      126
+    ],
+    "actual": 9,
+    "inference_ms": 30,
+    "max_score_error": 0
+  },
+  {
+    "name": "D9_005.PGM",
+    "label": 9,
+    "expected": 9,
+    "scores": [
+      -128,
+      -128,
+      -128,
+      -74,
+      -128,
+      -128,
+      -128,
+      -127,
+      -128,
+      74
+    ],
+    "actual": 9,
+    "inference_ms": 30,
+    "max_score_error": 0
+  }
+]

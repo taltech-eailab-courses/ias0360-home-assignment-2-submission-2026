@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+/cache/
+/runs/
+/firmware/deps/
+**/build/
+*.uf2
+*.elf
+*.map
+/H2DIGITS/
