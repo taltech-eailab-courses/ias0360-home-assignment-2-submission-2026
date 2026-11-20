@@ -1,0 +1,13 @@
+name,epochs,lr,optimizer,batch_size,params,file_kb,avg_ms,val_acc,own_acc,own_pred,notes
+initial,10,0.001,adam,128,14410,213.2,3.44,0.9863,7/10,"[np.int64(9), np.int64(9), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(8)]",
+small_flat_4_8_16,10,0.001,adam,128,3722,88.5,3.77,0.9763,6/10,"[np.int64(9), np.int64(3), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(3), np.int64(8)]",
+small_flat_drop,10,0.001,adam,128,3722,88.5,3.52,0.973,6/10,"[np.int64(3), np.int64(9), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(3), np.int64(8)]",
+gap,20,0.003,adam,128,2122,69.2,4.3,0.9496,6/10,"[np.int64(0), np.int64(4), np.int64(2), np.int64(3), np.int64(4), np.int64(2), np.int64(8), np.int64(2), np.int64(8), np.int64(9)]",
+small_gap,20,0.003,adam,128,650,52.9,4.17,0.8561,2/10,"[np.int64(6), np.int64(6), np.int64(4), np.int64(3), np.int64(6), np.int64(2), np.int64(1), np.int64(3), np.int64(8), np.int64(6)]",
+small_5ep,5,0.001,adam,128,3722,88.5,4.18,0.9733,7/10,"[np.int64(0), np.int64(9), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(3), np.int64(8)]",
+mobilenet,10,0.001,adam,128,3898,91.9,4.77,0.9393,6/10,"[np.int64(0), np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(2), np.int64(5), np.int64(9), np.int64(8), np.int64(8)]",
+squeezenet,10,0.001,adam,128,3514,120.0,6.24,0.9482,5/10,"[np.int64(0), np.int64(8), np.int64(2), np.int64(3), np.int64(4), np.int64(8), np.int64(8), np.int64(9), np.int64(8), np.int64(8)]",
+flat_4_8_8,10,0.001,adam,128,2034,67.7,4.1,0.9723,8/10,"[np.int64(0), np.int64(7), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(3), np.int64(9)]",
+flat_4_8_8_lr003,10,0.003,adam,128,2034,67.7,3.47,0.9713,7/10,"[np.int64(0), np.int64(4), np.int64(2), np.int64(3), np.int64(4), np.int64(3), np.int64(6), np.int64(7), np.int64(8), np.int64(8)]",
+flat_4_8_16_lr003,10,0.003,adam,128,3722,88.5,3.89,0.983,8/10,"[np.int64(0), np.int64(9), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(8)]",
+flat_3_6_8,10,0.003,adam,128,1496,61.0,3.48,0.9649,6/10,"[np.int64(0), np.int64(9), np.int64(2), np.int64(3), np.int64(4), np.int64(8), np.int64(6), np.int64(9), np.int64(3), np.int64(9)]",
