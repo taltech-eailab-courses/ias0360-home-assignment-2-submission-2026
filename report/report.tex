@@ -1,0 +1,121 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{array}
+
+\begin{document}
+
+\title{MNIST Digit Classification with Touchscreen Evaluation}
+\author{\IEEEauthorblockN{Tanishq Vashishth}
+\IEEEauthorblockA{UNI-ID: 266058IV\\
+IAS0360 -- Home Assignment 2\\
+Tallinn University of Technology}}
+\maketitle
+
+\begin{abstract}
+This work builds and evaluates a small TensorFlow classifier for handwritten digits. A custom convolutional neural network (CNN) was trained on MNIST and compared with a LeNet-style network and a multilayer perceptron (MLP). Training settings including epoch count, learning rate, dropout, network width, and optimizer were varied. The best validation result was 98.47\% for the custom CNN trained for 10 epochs. The selected models were then evaluated on the reserved MNIST test set and on ten digits drawn on a touchscreen and collected through the Pico SD-card workflow. LeNet classified 9 of the 10 personal samples correctly. Since there was only one personal example per class, this result is a small demonstration rather than a reliable estimate of handwriting accuracy.
+\end{abstract}
+
+\begin{IEEEkeywords}
+MNIST, digit classification, convolutional neural network, TensorFlow, touchscreen
+\end{IEEEkeywords}
+
+\section{Introduction}
+The image-based part of Home Assignment 2 asks for a neural network trained on MNIST, ten touchscreen digit samples, and experiments comparing training or model choices. The optimization goal selected for this work was classification accuracy. The implementation therefore keeps the input and data split fixed while changing one main setting at a time in the custom CNN experiments. Two additional model families were trained for the architecture comparison.
+
+\section{Data and Preprocessing}
+MNIST contains 60,000 training images and 10,000 test images. The training portion was split using a fixed random seed (42) into 54,000 training examples and 6,000 validation examples. The official 10,000-image test set was held aside until model selection was complete.
+
+Each input is a 28$\times$28 grayscale image, converted to a single-channel float tensor and scaled to $[0,1]$. The touchscreen captures are read from PGM files without changing the originals. Preprocessing converts each image to grayscale, handles background polarity, crops around the digit stroke, preserves its aspect ratio, scales it inside a 20$\times$20 region, and centers it on a black 28$\times$28 canvas. The resulting input shape is $(28,28,1)$.
+
+\section{Models and Implementation}
+The custom CNN uses two 3$\times$3 convolution layers with 8 and 16 filters, each followed by max pooling, then a 32-unit dense layer and a ten-class softmax output. It has 14,410 trainable parameters. The wider CNN keeps this structure but increases the convolution widths to 16 and 32 and the dense layer to 64 units.
+
+The LeNet-style model uses $\tanh$ convolutions, average pooling, and dense layers; it is adapted for 28$\times$28 input. The MLP flattens each image and uses dense layers of 128 and 64 units. All models return a probability for each digit from 0 to 9. The models were implemented with TensorFlow/Keras and run in the project's Docker CPU environment.
+
+\section{Experiments and Verification}
+MNIST was loaded from the Keras dataset interface. All runs use the same split, seed, image preparation, and batch size of 64. The baseline custom CNN uses Adam with learning rate 0.001 for five epochs. For each run, the checkpoint with the highest validation accuracy was retained. Once all runs finished, the best-validation checkpoint from each architecture family was evaluated on the reserved test set. Test results were not used to tune the models.
+
+The custom CNN trials change one main setting at a time: epoch count, learning rate, dropout, network width, or optimizer. The SGD run uses learning rate 0.01 and momentum 0.9. The full study has eight runs and 45 total training epochs.
+
+\begin{table*}[t]
+\caption{Optimization trials and measured results. Model-file size includes the weights; size columns are not additive.}
+\label{tab:experiments}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrrr}
+\toprule
+Run & Main change & Epochs & Parameters & H5 size (KiB) & Validation accuracy & Own accuracy & Time (ms/image)\\
+\midrule
+Baseline & CNN, Adam 0.001 & 5 & 14,410 & 77.3 & 98.10\% & 80\% & 0.169\\
+More epochs & 10 epochs & 10 & 14,410 & 77.3 & 98.47\% & 80\% & 0.167\\
+Lower learning rate & Adam 0.0003 & 5 & 14,410 & 77.3 & 97.12\% & 70\% & 0.156\\
+Dropout & Dropout 0.25 & 5 & 14,410 & 78.4 & 98.10\% & 80\% & 0.167\\
+Wider CNN & 16/32 filters, dense 64 & 5 & 56,714 & 243.3 & 98.38\% & 80\% & 0.225\\
+SGD momentum & SGD 0.01, momentum 0.9 & 5 & 14,410 & 77.3 & 98.13\% & 70\% & 0.158\\
+LeNet & LeNet-style CNN & 5 & 61,706 & 269.3 & 98.05\% & 90\% & 0.230\\
+MLP & Fully connected network & 5 & 109,386 & 444.9 & 97.13\% & 80\% & 0.156\\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+Validation accuracy is measured on 6,000 MNIST examples. Own-data accuracy uses ten touchscreen samples, one for each digit. Average inference time is the warmed, serial time for those ten inputs divided by ten; file reading and preprocessing are excluded. Timing was measured in the Docker CPU environment, not on Raspberry Pi hardware. Parameter count, weights-only bytes, and serialized H5 size describe model size in different ways. The H5 file already contains the weights, so the sizes should not be added together.
+
+\section{Results and Analysis}
+The 10-epoch custom CNN achieved the best validation accuracy (98.47\%), compared with 98.10\% for the five-epoch baseline, an increase of 0.37 percentage points. The selected custom CNN reached 98.56\% on the reserved MNIST test set. The validation-selected LeNet and MLP reached 98.21\% and 97.44\%, respectively. These results are from one fixed split and seed. The custom CNN also had more parameter trials than either alternative, so this comparison does not show that it is universally the best architecture.
+
+Increasing the CNN width raised its parameter count to 56,714 and its H5 file size to 243.3 KiB, but validation accuracy was 98.38\%, below the 10-epoch run. Dropout matched the baseline at 98.10\%. The lower learning rate and SGD runs reached 97.12\% and 98.13\%. For these runs, the additional complexity or optimizer change did not improve on the best validation result.
+
+\subsection{Touchscreen Samples}
+One digit from each class was drawn on the touchscreen, saved to the SD card, exported as a PGM file, and processed by the same input pipeline used for evaluation. Fig.~\ref{fig:digits} shows the ten processed inputs. LeNet had the highest score on this small set: 9/10 (90\%). The custom CNN scored 8/10 (80\%), and the MLP scored 8/10 (80\%). These samples were evaluated after MNIST training and were not used to adjust the models.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/processed_touchscreen_digits.png}
+\caption{Processed touchscreen inputs labelled 0--9. These are the 28$\times$28 images passed to the classifiers.}
+\label{fig:digits}
+\end{figure}
+
+\begin{table}[t]
+\caption{Predicted class for each touchscreen sample.}
+\label{tab:predictions}
+\centering
+\begin{tabular}{rrrr}
+\toprule
+Actual & Custom CNN & LeNet & MLP\\
+\midrule
+0 & 0 & 0 & 2\\
+1 & 1 & 1 & 1\\
+2 & 2 & 2 & 2\\
+3 & 3 & 3 & 3\\
+4 & 4 & 4 & 4\\
+5 & 5 & 5 & 5\\
+6 & 5 & 5 & 6\\
+7 & 7 & 7 & 7\\
+8 & 3 & 8 & 2\\
+9 & 9 & 9 & 9\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+LeNet's one error was the drawn 6 predicted as 5. The custom CNN confused 6 with 5 and 8 with 3. The MLP confused 0 with 2 and 8 with 2. With only one sample for each class, a single mistake changes own-data accuracy by ten percentage points; the table is a small confusion summary, not a stable estimate of handwriting performance.
+
+\section{Issues and Discussion}
+The personal-data evaluation contains only ten drawings. A single unusual shape changes its score substantially, and the handwriting style differs from the MNIST test distribution. Several samples per digit, preferably from more than one person, would give a more useful assessment.
+
+The inference times are CPU measurements from the Docker environment and exclude preprocessing. They do not describe inference performance on the Raspberry Pi Pico. This project uses the Pico touchscreen and SD card to collect the samples; neural-network inference in these experiments ran in TensorFlow in the container. The experiments also use one seed and one split, and the custom CNN received more hyperparameter trials than LeNet and the MLP. Quantization and embedded inference acceleration were not evaluated.
+
+\section{Conclusion}
+A complete image-classification workflow was built: MNIST preparation, custom CNN training, optimization trials, comparison with LeNet and an MLP, touchscreen capture, SD-card export, preprocessing, and evaluation. The custom CNN was the strongest selected model on the reserved MNIST test set, while LeNet classified the ten personal samples most accurately. These results answer different questions and are reported separately. Collecting more touchscreen samples per digit would make the personal-data comparison more informative.
+
+\begin{thebibliography}{00}
+\bibitem{lecun1998} Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner, ``Gradient-based learning applied to document recognition,'' \emph{Proceedings of the IEEE}, vol. 86, no. 11, pp. 2278--2324, 1998.
+\bibitem{tensorflow} TensorFlow, ``TensorFlow and Keras documentation.'' [Online]. Available: \url{https://www.tensorflow.org/}. Accessed: Nov. 16, 2026.
+\bibitem{course} Tallinn University of Technology, ``IAS0360 Lab Exercises 2026,'' Lab 2.2 MNIST CNN starter notebook, 2026.
+\end{thebibliography}
+
+\end{document}

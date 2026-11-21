@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "runtime": "docker",
+  "tensorflow": "2.16.2",
+  "tf_keras": "2.16.0",
+  "preprocessing_tests_passed": 3,
+  "architectures": 3,
+  "trained_models_reloaded": 8,
+  "train_val_indices_disjoint": true,
+  "sample_counts": {
+    "train": 54000,
+    "val": 6000,
+    "test": 10000
+  },
+  "all_copied_model_hashes_match": true,
+  "own_digits_status": "pending",
+  "missing_own_digits_rejected": true
+}

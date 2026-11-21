@@ -1,0 +1,14 @@
+{
+  "architecture": "mlp",
+  "epochs": 5,
+  "batch": 64,
+  "learning_rate": 0.001,
+  "optimizer": "adam",
+  "filters": [
+    8,
+    16
+  ],
+  "dense": 32,
+  "dropout": 0.0,
+  "name": "mlp"
+}

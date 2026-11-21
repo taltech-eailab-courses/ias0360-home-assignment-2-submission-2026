@@ -1,0 +1,25 @@
+Model: "custom_cnn"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d (Conv2D)             (None, 26, 26, 16)        160       
+                                                                 
+ max_pooling2d (MaxPooling2  (None, 13, 13, 16)        0         
+ D)                                                              
+                                                                 
+ conv2d_1 (Conv2D)           (None, 11, 11, 32)        4640      
+                                                                 
+ max_pooling2d_1 (MaxPoolin  (None, 5, 5, 32)          0         
+ g2D)                                                            
+                                                                 
+ flatten (Flatten)           (None, 800)               0         
+                                                                 
+ dense (Dense)               (None, 64)                51264     
+                                                                 
+ dense_1 (Dense)             (None, 10)                650       
+                                                                 
+=================================================================
+Total params: 56714 (221.54 KB)
+Trainable params: 56714 (221.54 KB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________

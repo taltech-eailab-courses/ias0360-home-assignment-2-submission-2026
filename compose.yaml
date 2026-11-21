@@ -1,0 +1,8 @@
+services:
+  homework:
+    build: .
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    init: true
+    shm_size: 512mb

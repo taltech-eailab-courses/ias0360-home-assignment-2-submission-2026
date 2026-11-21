@@ -1,0 +1,10 @@
+.venv/
+.cache/
+__pycache__/
+*.pyc
+.DS_Store
+outputs/
+pico_digit_capture/build/
+data/raw_sd_card/*
+!data/raw_sd_card/README.md
+!data/raw_sd_card/collection.md

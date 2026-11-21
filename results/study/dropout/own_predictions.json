@@ -1,0 +1,18 @@
+{
+  "total_prediction_seconds": 0.0016690420000031736,
+  "average_prediction_ms": 0.16690420000031736,
+  "predictions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    5,
+    7,
+    3,
+    9
+  ],
+  "method": "Three warmups, then 10 serial batch-1 calls; total timed prediction seconds / 10. Excludes disk I/O and preprocessing.",
+  "accuracy": 0.8
+}

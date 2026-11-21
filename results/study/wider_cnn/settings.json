@@ -1,0 +1,14 @@
+{
+  "architecture": "custom_cnn",
+  "epochs": 5,
+  "batch": 64,
+  "learning_rate": 0.001,
+  "optimizer": "adam",
+  "filters": [
+    16,
+    32
+  ],
+  "dense": 64,
+  "dropout": 0.0,
+  "name": "wider_cnn"
+}

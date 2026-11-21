@@ -1,0 +1,27 @@
+{
+  "status": "available",
+  "source_sha256": {
+    "digit_0.pgm": "00a8379c2ab28828254747e6cffdca304c397e3097a5cd527018bd3e489ac767",
+    "digit_1.pgm": "1f196be3548b40969c3287bfb578c56b6ee687d037c3f8524fd05ca9b9d3a23d",
+    "digit_2.pgm": "3f223c388047ef2e4784d468847ed92fad40f490562180596c466848f9d589e2",
+    "digit_3.pgm": "a28275f85e859bf8229ad0a1adcb5f70881142ef0e68754c02fb16ae3f747c3b",
+    "digit_4.pgm": "5001e7fd1cd8d31618d67d7128d93232f7a633b79c4113823be23c21d151cd4f",
+    "digit_5.pgm": "d3e5755dbfc3cf79a65b3d6e9b94242ff75e8f8b1da81bf08b353fea8645d064",
+    "digit_6.pgm": "861fff717de51a75ac854d45fb0ad7eefeca70216f7de370c18a821d00ba8d22",
+    "digit_7.pgm": "c187c294399e929986d3abd10a810be58b5febef2488e2ae45bb5cbf3fc1a6a5",
+    "digit_8.pgm": "fd9c9638dc9d332c7390b4bf7d73f2d595244a19799db4350ee9d05c9c293614",
+    "digit_9.pgm": "176f74e9adb798044d825afd9686e5786ba7865c2bf407f2d7a627fd86bfee32"
+  },
+  "labels": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ]
+}
