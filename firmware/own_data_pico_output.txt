@@ -1,0 +1,24 @@
+Own data test
+Model: 5520 bytes, tensor arena used: 5076 of 16384 bytes
+own_20261104_200029.txt true=negative pred=negative input_sum=55504
+own_20261104_200036.txt true=negative pred=negative input_sum=55264
+own_20261104_200042.txt true=negative pred=negative input_sum=55313
+own_20261104_200048.txt true=negative pred=negative input_sum=55263
+own_20261104_200055.txt true=negative pred=negative input_sum=55236
+own_20261104_195634.txt true=ring pred=slope input_sum=50499
+own_20261104_195641.txt true=ring pred=slope input_sum=50306
+own_20261104_195647.txt true=ring pred=slope input_sum=49207
+own_20261104_195653.txt true=ring pred=slope input_sum=48449
+own_20261104_195700.txt true=ring pred=slope input_sum=48524
+own_20261104_195807.txt true=slope pred=slope input_sum=50598
+own_20261104_195814.txt true=slope pred=slope input_sum=50943
+own_20261104_195820.txt true=slope pred=slope input_sum=50651
+own_20261104_195826.txt true=slope pred=slope input_sum=49116
+own_20261104_195833.txt true=slope pred=slope input_sum=46377
+own_20261104_195904.txt true=wing pred=wing input_sum=50095
+own_20261104_195910.txt true=wing pred=wing input_sum=48052
+own_20261104_195917.txt true=wing pred=wing input_sum=48673
+own_20261104_195923.txt true=wing pred=wing input_sum=46982
+own_20261104_195930.txt true=wing pred=wing input_sum=48038
+Pico accuracy: 15/20
+Average per gesture: preprocessing 311.80 ms, inference 14.471 ms

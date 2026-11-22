@@ -1,0 +1,292 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{textcomp}
+
+\begin{document}
+
+\title{IMU Gesture Recognition with a Small CNN\\for a Raspberry Pi Pico}
+
+\author{\IEEEauthorblockN{Markkus Koddala}
+\IEEEauthorblockA{Student code 253101IAPM\\
+IAS0360 Machine Learning for Embedded Systems\\
+Tallinn University of Technology\\
+markkk@taltech.ee}}
+
+\maketitle
+
+\begin{abstract}
+This report describes a convolutional neural network that recognises four
+hand gestures from accelerometer data, with model memory as the optimisation
+goal. Replacing the dense head of the lab baseline with global average
+pooling reduced the model from 4556 to 700 parameters without a loss in
+validation accuracy (0.95 to 0.97). With int8 quantisation the weights take
+0.68~KB and the TFLite file 5.0~KB, compared with 17.8~KB and 22.1~KB for the
+baseline. On 20 gestures that I recorded myself the accuracy dropped to
+0.62, which shows that the small shared dataset does not cover other users
+well.
+\end{abstract}
+
+\begin{IEEEkeywords}
+IMU, gesture recognition, CNN, quantisation, embedded systems
+\end{IEEEkeywords}
+
+\section{Method}
+
+\subsection{Data}
+The shared dataset from Lab~2.2 has four classes: \emph{negative} (no
+gesture), \emph{ring} (an O shape), \emph{slope} (an L shape) and
+\emph{wing} (a W shape), with 25 recordings per class. Each recording holds
+about 2.1~s of raw ICM-20948 accelerometer data at about 2~kHz. The lab
+preprocessor converts the counts to g, applies a 4th-order Butterworth
+low-pass filter at 20~Hz, resamples each recording to 128 samples and
+normalises each axis with the mean and standard deviation of the training
+set. The split is made by recording, not by window, with 15/5/5 recordings
+per class for training, validation and test. One whole gesture is one input
+of shape $128 \times 3 \times 1$.
+
+For my own data I recorded 5 gestures per class, 20 in total, with the Pico
+and the eval board IMU. I did not have an SD card, so I changed the lab
+recorder to keep each recording in RAM and send it over USB serial. The
+format stays the same (\texttt{ax,ay,az} in raw counts, 2.1~s, 4200 rows).
+The free-running loop sampled at 2160~Hz, so I fixed the sample period to
+500~$\mu$s to get the 4200 rows that the preprocessor expects.
+
+The shared data was recorded with the board screen facing down, so gravity
+is on $+z$. I held the board upright, which puts gravity on $-x$, and drew
+the gestures in the board's x--y plane. Before preprocessing, my data is
+rotated into the shared frame with
+\begin{equation}
+\begin{bmatrix} x_s \\ y_s \\ z_s \end{bmatrix} =
+\begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ -1 & 0 & 0 \end{bmatrix}
+\begin{bmatrix} x_o \\ y_o \\ z_o \end{bmatrix}.
+\end{equation}
+This rotation follows from the board position, and it also gave the best
+own-data accuracy of all 24 axis-aligned rotations. The own data is used
+only for testing, never for training.
+
+\subsection{Models}
+The initial model is the CNN from the lab: two Conv2D + max-pooling blocks
+(8 and 16 filters), Flatten, Dense(16) and a softmax output, with dropout
+0.1. It has 4556 parameters, and 85\% of them are in the Dense(16) layer
+after Flatten.
+
+My own model keeps the two convolution blocks but replaces Flatten and
+Dense(16) with global average pooling (GAP). Each of the 16 feature maps is
+averaged over time, and the 16 values go straight to the output layer. This
+gives 700 parameters. The two other architectures for Step~6 are small
+versions of known networks built for the same input. The MobileNet-style
+model uses a Conv2D stem and two depthwise-separable blocks (depthwise
+$4 \times 1$ convolution and $1 \times 1$ pointwise convolution, 16 and 32
+channels). The SqueezeNet-style model uses a Conv2D stem and two Fire
+modules (a $1 \times 1$ squeeze to 4 channels, then $1 \times 1$ and
+$4 \times 1$ expand convolutions with 8 channels each). Both end with GAP.
+
+\subsection{Optimisation goal and evaluation}
+I chose memory size as the optimisation goal. The Pico W has 264~KB of SRAM
+and 2~MB of flash, and the model shares them with the IMU driver, the USB
+stack and the TFLite Micro tensor arena. The baseline is already accurate on
+the shared data, so there is little to gain in accuracy, and a smaller model
+is usually faster on a microcontroller as well.
+
+Every configuration is trained with three random seeds, because the
+validation and test sets have only 20 gestures each and one gesture is
+5\% of the accuracy. All models use Adam with a learning rate of
+$10^{-3}$, batch size 16, and 30 epochs (60 for the GAP models, which learn
+more slowly), unless stated otherwise. After training, each model is
+converted to TFLite, as float32 or as full-integer int8 with post-training
+quantisation, and all accuracies are measured on the TFLite model. Memory is
+given as the number of parameters, the weight size (4 bytes per parameter
+for float32, 1 byte for int8) and the size of the \texttt{.tflite} file.
+The inference time is the time for all own gestures divided by their
+number, one gesture at a time, measured on a laptop CPU with the TFLite
+interpreter.
+
+\section{Experiments}
+
+Table~\ref{tab:opt} shows the experiments in the order they were done. The
+first rows change one training parameter of the initial model at a time:
+learning rate, optimiser, batch size, activation and dropout. The next rows
+make the model smaller, first by using fewer filters and then with the GAP
+head. The last rows apply int8 quantisation. Table~\ref{tab:arch} compares
+the three architectures. The full table, with test accuracy and the spread
+over seeds, is in the code repository.
+
+\begin{table}[t]
+\caption{Optimisation experiments (mean of 3 seeds)}
+\label{tab:opt}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Method & Inf. & Params & Weights & TFLite & Val. & Own \\
+       & ($\mu$s) &    & (KB)    & (KB)   & acc. & acc. \\
+\midrule
+Initial model                  & 8  & 4556 & 17.8 & 22.1 & 0.95 & 0.40 \\
+Epochs 10, lr 0.05             & 8  & 4556 & 17.8 & 22.1 & 0.93 & 0.15 \\
+lr $10^{-2}$                   & 7  & 4556 & 17.8 & 22.1 & 0.95 & 0.37 \\
+SGD (mom. 0.9), lr $10^{-2}$   & 7  & 4556 & 17.8 & 22.1 & 0.95 & 0.45 \\
+RMSprop                        & 8  & 4556 & 17.8 & 22.1 & 0.95 & 0.43 \\
+Batch size 32                  & 8  & 4556 & 17.8 & 22.1 & 0.95 & 0.32 \\
+tanh activation                & 8  & 4556 & 17.8 & 22.4 & 0.95 & 0.47 \\
+Dropout 0.3                    & 7  & 4556 & 17.8 & 22.1 & 0.95 & 0.27 \\
+Filters 4/8, Dense(8)          & 7  & 1192 & 4.66 & 8.9  & 0.85 & 0.27 \\
+\midrule
+GAP head (own)                 & 7  & 700  & 2.73 & 5.9  & 0.95 & 0.53 \\
+GAP, lr $10^{-2}$              & 7  & 700  & 2.73 & 5.9  & 0.97 & 0.62 \\
+GAP, filters 4/8               & 6  & 224  & 0.88 & 4.1  & 0.90 & 0.30 \\
+GAP, filters 4/8, lr $10^{-2}$ & 6  & 224  & 0.88 & 4.1  & 0.97 & 0.48 \\
+\midrule
+Initial model, int8            & 14 & 4556 & 4.45 & 10.4 & 0.95 & 0.43 \\
+GAP, lr $10^{-2}$, int8        & 14 & 700  & 0.68 & 5.0  & 0.97 & 0.62 \\
+GAP, 4/8, lr $10^{-2}$, int8   & 14 & 224  & 0.22 & 4.3  & 0.97 & 0.48 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Architecture comparison (float32, mean of 3 seeds)}
+\label{tab:arch}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Architecture & Inf. & Params & TFLite & Val. & Test & Own \\
+             & ($\mu$s) &   & (KB)   & acc. & acc. & acc. \\
+\midrule
+Initial model (lab)  & 8 & 4556 & 22.1 & 0.95 & 0.95 & 0.40 \\
+Own (GAP head)       & 7 & 700  & 5.9  & 0.95 & 1.00 & 0.53 \\
+MobileNet-style      & 7  & 1044 & 9.2  & 0.95 & 1.00 & 0.53 \\
+SqueezeNet-style     & 7 & 628  & 9.5  & 1.00 & 1.00 & 0.67 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+
+\textbf{Training parameters.} On the shared data almost every change of
+learning rate, optimiser, batch size, activation or dropout gives the same
+validation accuracy of 0.95. With only 20 validation gestures this is one
+error, so these settings cannot be separated on validation accuracy. The
+example setting from the assignment (10 epochs, learning rate 0.05) was the
+only one that was clearly worse, at 0.93 on validation and 0.15 on own data.
+None of these changes affect memory, because the architecture stays the
+same.
+
+\textbf{Model size.} Fewer filters in the initial model (1192 parameters)
+cost 10 points of validation accuracy and made the results unstable between
+seeds (standard deviation 0.13). The GAP head removed 85\% of the
+parameters and kept the accuracy, because it removes the large Dense layer
+instead of making the feature extractor weaker. With a learning rate of
+$10^{-2}$ the GAP model reached 0.97 on validation and 1.00 on test with
+700 parameters. Going down to 224 parameters still gave 0.97, but only with
+the higher learning rate, and the own-data accuracy fell from 0.62 to 0.48.
+
+\textbf{Quantisation.} int8 post-training quantisation reduced the weights
+by four times without changing the validation accuracy of any model. The
+effect on the file size depends on the model size. For the initial model the
+TFLite file shrank from 22.1~KB to 10.4~KB. For the 700-parameter model it
+only shrank from 5.9~KB to 5.0~KB, and for the 224-parameter model the int8
+file (4.3~KB) was larger than the float32 file (4.1~KB). In these small
+models most of the file is the graph description and the quantisation
+parameters, not the weights. On the laptop the int8 models were about
+twice as slow as the float32 models. This does not carry over to the Pico:
+its Cortex-M0+ has no floating-point unit, so float32 arithmetic is done in
+software there, and int8 is expected to be faster.
+
+The best model for the memory goal is the GAP model with a learning rate of
+$10^{-2}$ in int8: 700 parameters, 0.68~KB of weights and a 5.0~KB TFLite
+file, which is 4.4 times smaller than the initial model, with higher
+validation and own-data accuracy.
+
+\textbf{Architectures.} All three architectures reach 0.95--1.00 on the
+shared data. The SqueezeNet-style model has the fewest parameters (628) and
+the best own-data accuracy (0.67), but its TFLite file (9.5~KB) is larger
+than that of the own model (5.9~KB), because the Fire modules add more
+layers and tensors to the graph. The MobileNet-style model needs more
+parameters than the other two, and all three had the same inference time
+on the laptop (7~$\mu$s). For the memory goal the own
+GAP model is the best trade-off.
+
+\textbf{Own data.} The accuracy on my own recordings (0.15--0.67) is much
+lower than on the shared test set (0.90--1.00). With one trained own GAP model,
+all negative, slope and wing gestures were recognised, apart from one
+slope, but none of the five rings: two were classified as slope and three
+as wing. When I mirrored the x axis of my ring recordings, the four models
+recognised 19 of the 20 ring predictions, against 1 of 20 without the
+mirror. So my rings differ from the training rings in the direction of
+motion, most likely because I drew them in the opposite direction. My
+gestures were also faster, about 1.0--1.4~s instead of almost the full
+2.1~s window.
+
+\subsection{Deployment on the Pico}\label{sec:pico}
+The chosen model (GAP, learning rate $10^{-2}$, int8) was converted with
+uint8 input and output, as in Lab~2.4, and run with TFLite Micro on the
+Pico~W (RP2040, Cortex-M0+ at 125~MHz). The lab firmware used a different
+preprocessing than the Python code (block averaging over a 4000-sample
+window, no filter and no axis rotation), so I rewrote it in C++ to follow
+the Python steps exactly: rotation, the two Butterworth filters, linear
+resampling to 128 samples, normalisation and quantisation. To check this, a
+test program runs my 20 recordings, stored in flash, through the same code.
+The quantised model inputs on the Pico differ from the PC by at most one
+step on single values (float32 on the Pico against float64 on the PC), and
+the Pico classified 15 of the 20 gestures correctly, the same number as the
+PC for this model. Two rings were labelled slope on the Pico and wing on
+the PC, both wrong.
+
+\begin{table}[h]
+\caption{Chosen model on the Pico W}
+\label{tab:pico}
+\centering
+\footnotesize
+\begin{tabular}{lr}
+\toprule
+Model file (int8, uint8 I/O) & 5520 B \\
+Tensor arena used            & 5076 B \\
+Inference time per gesture   & 14.5 ms \\
+Preprocessing time per gesture & 312 ms \\
+Own-data accuracy (20 gestures) & 15/20 \\
+Firmware flash / RAM         & 146 KB / 61 KB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The whole model needs about 10.6~KB (model and arena), 4\% of the RAM of
+the Pico. Inference takes 14.5~ms, but the preprocessing takes 312~ms,
+because the two filters run in software floating point over 4200 samples
+per axis. For this application the preprocessing, not the network, is the
+part worth optimising next, for example with fixed-point filters or a
+simpler decimation filter.
+
+\section{Issues and Discussion}
+
+The main problem is the dataset. 25 recordings per class from what looks
+like one person and one session are not enough for a model that should work
+for other users. The test accuracy of 1.00 says little about this; the own
+data shows it. It would be better to record the gestures from several
+people, in both directions and at different speeds, and to keep one person
+out as the test set. I also tried training with augmented data (random time
+compression and shift, rotations up to 15\textdegree{} and noise). It did
+not improve the own-data accuracy and did not fix the rings, so I did not
+keep it. A direction change of the ring is a mirror image, which a rotation
+cannot produce.
+
+The validation set is too small to compare training settings: most rows of
+Table~\ref{tab:opt} differ by one gesture or less. Cross-validation over all
+100 recordings would give more reliable numbers.
+
+The inference times in the tables were measured on a laptop and are only
+useful to compare models with each other. The Pico results are in
+Section~\ref{sec:pico}.
+
+Finally, the model expects one complete gesture in a fixed 2.1~s window
+that starts when the recording starts. A real device would need a sliding
+window and a way to detect the start of a gesture.
+
+\end{document}

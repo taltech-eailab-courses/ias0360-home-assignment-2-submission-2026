@@ -1,0 +1,5 @@
+optimization method,inference ms,params,weights KB,tflite KB,val acc,val std,test acc,own acc
+Initial model (lab baseline),0.008,4556,17.8,22.1,0.95,0.0,0.95,0.4
+Own: GAP head,0.007,700,2.73,5.9,0.95,0.0,1.0,0.533
+MobileNet-style,0.006,1044,4.08,9.2,0.95,0.0,1.0,0.533
+SqueezeNet-style,0.007,628,2.45,9.5,1.0,0.0,1.0,0.667
